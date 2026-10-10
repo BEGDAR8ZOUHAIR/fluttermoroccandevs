@@ -1,0 +1,29 @@
+{
+  "name": "fluttermoroccandevs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Community website for FlutterMoroccanDevs — empowering Flutter & Dart developers across Morocco.",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=9.6.5"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@lucide/astro": "^1.55.0",
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  }
+}

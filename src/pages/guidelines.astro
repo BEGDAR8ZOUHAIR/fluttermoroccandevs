@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import PageHeader from "../components/PageHeader.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+
+const rules: { title: string; body: string }[] = [
+  {
+    title: "Be respectful",
+    body: "Treat every member with kindness. Disagree with ideas, never attack people. Assume good intent.",
+  },
+  {
+    title: "No harassment or discrimination",
+    body: "Harassment, hate speech, and discrimination based on gender, identity, religion, origin, or experience level are not tolerated.",
+  },
+  {
+    title: "Keep it on topic",
+    body: "Our spaces are for Flutter, Dart, and the Moroccan tech community. Keep discussions and self-promotion relevant and useful.",
+  },
+  {
+    title: "Share generously, credit properly",
+    body: "Ask questions openly and share what you learn. Always credit the authors of code, ideas, and content.",
+  },
+  {
+    title: "Protect privacy",
+    body: "Never share someone's private information without permission, and respect the confidentiality of shared materials.",
+  },
+  {
+    title: "Report issues",
+    body: "If you experience or witness a problem, contact the moderators or email us. Reports are handled confidentially and fairly.",
+  },
+];
+---
+
+<BaseLayout
+  title="Community guidelines"
+  description="The code of conduct that keeps FlutterMoroccanDevs a welcoming, respectful, and productive space for every Flutter developer in Morocco."
+>
+  <PageHeader
+    eyebrow="Community guidelines"
+    title="How we treat each other"
+    description="These guidelines keep FlutterMoroccanDevs a welcoming space for everyone — across cities, languages, and experience levels. They apply to all our spaces: events, chats, calls, and repositories."
+  />
+
+  <Section>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        rules.map((rule, index) => (
+          <div class="card">
+            <p class="text-sm font-semibold text-flutter-600 dark:text-flutter-300">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+            <h2 class="h3 mt-2">{rule.title}</h2>
+            <p class="mt-2 text-sm muted">{rule.body}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-10 max-w-3xl text-sm muted">
+      By participating in FlutterMoroccanDevs — online or in person — you agree to these guidelines.
+      Moderators may take any action necessary to keep the community safe, including warnings or
+      removal from community spaces.
+    </p>
+  </Section>
+
+  <CtaBanner
+    title="Agreed? You are welcome here."
+    description="Join the community and help us keep it respectful, helpful, and open to everyone."
+  />
+</BaseLayout>

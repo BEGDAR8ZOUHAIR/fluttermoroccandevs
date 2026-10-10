@@ -1,0 +1,103 @@
+---
+import { Menu, X } from "@lucide/astro";
+import { nav, site } from "../config/site";
+import ThemeToggle from "./ThemeToggle.astro";
+import SocialLinks from "./SocialLinks.astro";
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/80"
+>
+  <nav class="container-page flex h-16 items-center justify-between gap-3" aria-label="Main">
+    <a href="/" class="flex items-center gap-2.5" aria-label={`${site.name} — home`}>
+      <img src="/favicon.svg" width="32" height="32" alt="" class="size-8 rounded-lg" />
+      <span class="text-base font-extrabold tracking-tight text-slate-900 dark:text-white">
+        Flutter<span class="text-flutter-500">Moroccan</span>Devs
+      </span>
+    </a>
+
+    <ul class="hidden items-center gap-0.5 lg:flex">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                "btn btn-ghost",
+                isActive(item.href) && "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white",
+              ]}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-1.5">
+      <ThemeToggle />
+      <a href={site.joinHref} class="btn btn-solid hidden sm:inline-flex">Join Community</a>
+      <button
+        id="nav-toggle"
+        type="button"
+        class="btn btn-ghost size-10 p-0 lg:hidden"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Open menu"
+      >
+        <span id="nav-icon-open" class="inline-flex"><Menu size={22} /></span>
+        <span id="nav-icon-close" class="hidden"><X size={22} /></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="hidden border-t border-slate-200/70 dark:border-slate-800/70 lg:hidden">
+    <div class="container-page space-y-4 py-5">
+      <ul class="space-y-1">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold transition",
+                  isActive(item.href)
+                    ? "bg-flutter-500/10 text-flutter-700 dark:text-flutter-300"
+                    : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800",
+                ]}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={site.joinHref} class="btn btn-solid w-full">Join Community</a>
+      <SocialLinks iconSize={16} />
+    </div>
+  </div>
+</header>
+
+<script>
+  import { logger } from "../lib/logger";
+
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("nav-icon-open");
+  const closeIcon = document.getElementById("nav-icon-close");
+
+  toggle?.addEventListener("click", () => {
+    if (!menu) return;
+    const open = !menu.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    openIcon?.classList.toggle("hidden", open);
+    closeIcon?.classList.toggle("hidden", !open);
+    logger.debug("mobile menu toggled", { open });
+  });
+</script>

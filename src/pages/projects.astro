@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import PageHeader from "../components/PageHeader.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+import BrandIcon from "../components/BrandIcon.astro";
+import { projectsByStars } from "../data/projects";
+import { socials } from "../config/site";
+
+const github = socials.find((social) => social.icon === "github");
+---
+
+<BaseLayout
+  title="Projects"
+  description="Open-source Flutter apps and pub.dev packages built by the FlutterMoroccanDevs community — offline-first apps, UI kits, localization helpers, and more."
+>
+  <PageHeader
+    eyebrow="Featured projects"
+    title="Open-source, built by the community"
+    description="Real Flutter apps and Dart packages created and maintained by Moroccan developers. Fork them, use them, and contribute back."
+  >
+    <div class="mt-7">
+      <a href={github?.href} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+        <BrandIcon name="github" size={16} /> Browse on GitHub
+      </a>
+    </div>
+  </PageHeader>
+
+  <Section>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {projectsByStars.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Built something with Flutter?"
+    description="Share your open-source Flutter app or package with the community — we love amplifying Moroccan work."
+  />
+</BaseLayout>

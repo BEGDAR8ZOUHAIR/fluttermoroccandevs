@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (Tailwind CSS v4 syntax). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Typography — matches GeeksBlabla (Space Grotesk + IBM Plex Mono). */
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Brand blue (GeeksBlabla primary). The "flutter" scale is remapped to this blue. */
+  --color-flutter-50: #e8f1fe;
+  --color-flutter-100: #d0e3fd;
+  --color-flutter-200: #a6c8fb;
+  --color-flutter-300: #6ea6f9;
+  --color-flutter-400: #3b8bfa;
+  --color-flutter-500: #066cf9;
+  --color-flutter-600: #0558cc;
+  --color-flutter-700: #0446a3;
+  --color-flutter-800: #03357a;
+  --color-flutter-900: #022652;
+
+  /* Neutral ink + surfaces */
+  --color-ink: #0e0f10;
+  --color-ink-soft: #292d33;
+  --color-line: #c3cad4;
+  --color-hero: #dce9fa;
+  --color-surface: #f2f4f7;
+
+  --color-morocco-red: #c1272d;
+  --color-morocco-green: #006233;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white text-[#292d33] antialiased dark:bg-slate-950 dark:text-slate-300;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-[#0e0f10] dark:text-white;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-flutter-500) 22%, transparent);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-flutter-500 ring-offset-2 ring-offset-white dark:ring-offset-slate-950;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16;
+  }
+
+  .section-alt {
+    @apply bg-[#f2f4f7] dark:bg-slate-950/40;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-flutter-500 focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-flutter-500/40 bg-flutter-500/10 px-3 py-1 font-mono text-xs font-medium uppercase tracking-wider text-flutter-600 dark:text-flutter-300;
+  }
+
+  .h1 {
+    @apply font-sans text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl;
+  }
+
+  .h2 {
+    @apply font-sans text-3xl font-bold tracking-tight sm:text-4xl;
+  }
+
+  .h3 {
+    @apply font-sans text-lg font-semibold;
+  }
+
+  .lead {
+    @apply text-base font-light text-[#5b6169] sm:text-lg dark:text-slate-400;
+  }
+
+  .muted {
+    @apply font-light text-[#5b6169] dark:text-slate-400;
+  }
+
+  .prompt {
+    @apply font-mono text-sm text-[#0e0f10] dark:text-slate-300;
+  }
+
+  .card {
+    @apply rounded-lg border border-[#c3cad4] bg-white p-6 transition duration-200 dark:border-slate-800 dark:bg-slate-900/60;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:border-flutter-500 hover:shadow-lg;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full border border-[#c3cad4] bg-[#fafbfd] px-2.5 py-0.5 font-mono text-xs font-medium text-[#5b6169] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300;
+  }
+
+  /* Signature GeeksBlabla buttons: white, 2px black border, hard offset shadow. */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-bold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply border-2 border-[#0e0f10] bg-white text-[#0e0f10] shadow-[4px_4px_0_0_#066cf9] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#066cf9] dark:border-slate-200 dark:bg-slate-900 dark:text-white dark:shadow-[4px_4px_0_0_#066cf9];
+  }
+
+  .btn-secondary {
+    @apply border-2 border-[#0e0f10] bg-white text-[#0e0f10] shadow-[4px_4px_0_0_#0e0f10] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#0e0f10] dark:border-slate-200 dark:bg-slate-900 dark:text-white dark:shadow-[4px_4px_0_0_#e2e8f0];
+  }
+
+  .btn-solid {
+    @apply border-2 border-[#0e0f10] bg-flutter-500 text-white shadow-[4px_4px_0_0_#0e0f10] hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-flutter-600 hover:shadow-[2px_2px_0_0_#0e0f10] dark:border-slate-200;
+  }
+
+  .btn-ghost {
+    @apply text-[#5b6169] hover:bg-[#f2f4f7] hover:text-[#0e0f10] dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white;
+  }
+
+  .link {
+    @apply font-medium text-flutter-600 underline-offset-4 hover:underline dark:text-flutter-300;
+  }
+
+  .icon-tile {
+    @apply flex size-11 shrink-0 items-center justify-center rounded-lg border border-flutter-500/30 bg-flutter-500/10 text-flutter-600 dark:text-flutter-300;
+  }
+
+  /* Animated grid background used by the hero (mirrors GeeksBlabla). */
+  .bg-grid {
+    background-image: linear-gradient(to right, #636161 1px, transparent 1px),
+      linear-gradient(to bottom, #636161 1px, transparent 1px);
+    background-size: 100px 100px;
+  }
+
+  @media (min-width: 768px) {
+    .bg-grid {
+      background-size: 200px 200px;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bg-grid {
+      animation: fmd-move-grid 16s linear infinite;
+    }
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 80%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 80%);
+  }
+}
+
+@keyframes fmd-move-grid {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 200px 0;
+  }
+}

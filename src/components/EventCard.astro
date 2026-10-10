@@ -1,0 +1,59 @@
+---
+import { MapPin, CalendarDays, Users, ArrowUpRight } from "@lucide/astro";
+import type { CommunityEvent } from "../data/events";
+import { formatDateTime, isUpcoming } from "../lib/format";
+
+interface Props {
+  event: CommunityEvent;
+}
+
+const { event } = Astro.props;
+const upcoming = isUpcoming(event.date);
+const formatLabel = { "in-person": "In person", online: "Online", hybrid: "Hybrid" }[event.format];
+---
+
+<article class="card card-hover flex h-full flex-col">
+  <div class="flex items-center justify-between gap-3">
+    <span
+      class:list={[
+        "badge",
+        upcoming && "border-flutter-500/30 bg-flutter-500/10 text-flutter-700 dark:text-flutter-300",
+      ]}
+    >
+      {upcoming ? "Upcoming" : "Past"}
+    </span>
+    <span class="badge">{formatLabel}</span>
+  </div>
+
+  <h3 class="mt-4 text-base font-semibold leading-snug text-slate-900 dark:text-white">
+    {event.title}
+  </h3>
+
+  <dl class="mt-3 space-y-1.5 text-sm muted">
+    <div class="flex items-center gap-2">
+      <CalendarDays size={15} /> <time datetime={event.date}>{formatDateTime(event.date)}</time>
+    </div>
+    <div class="flex items-center gap-2">
+      <MapPin size={15} /> {event.venue}
+    </div>
+    <div class="flex items-center gap-2">
+      <Users size={15} /> {event.city}
+    </div>
+  </dl>
+
+  <p class="mt-3 flex-1 text-sm muted">{event.description}</p>
+  <p class="mt-3 text-xs muted">{event.organizer}</p>
+
+  {
+    upcoming && (
+      <a
+        href={event.rsvpUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-secondary mt-4 w-full"
+      >
+        RSVP <ArrowUpRight size={15} />
+      </a>
+    )
+  }
+</article>

@@ -1,0 +1,41 @@
+---
+import { MessageCircle, Globe } from "@lucide/astro";
+import BrandIcon from "./BrandIcon.astro";
+import { socials, type SocialIcon } from "../config/site";
+
+interface Props {
+  class?: string;
+  iconSize?: number;
+  showLabels?: boolean;
+}
+
+const { class: className = "", iconSize = 18, showLabels = false } = Astro.props;
+
+// Non-brand icons that still exist in Lucide. Brand marks use <BrandIcon />.
+const lucideMap: Partial<Record<SocialIcon, any>> = {
+  discord: MessageCircle,
+  gdg: Globe,
+};
+---
+
+<ul class:list={["flex flex-wrap items-center gap-2", className]}>
+  {
+    socials.map((social) => {
+      const LucideIcon = lucideMap[social.icon];
+      return (
+        <li>
+          <a
+            href={social.href}
+            class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-flutter-500/40 hover:text-flutter-700 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300 dark:hover:text-flutter-300"
+            target="_blank"
+            rel="me noopener noreferrer"
+            aria-label={social.label}
+          >
+            {LucideIcon ? <LucideIcon size={iconSize} /> : <BrandIcon name={social.icon} size={iconSize} />}
+            {showLabels && <span>{social.label}</span>}
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

@@ -1,0 +1,37 @@
+---
+import { Play, Clock } from "@lucide/astro";
+import type { Episode } from "../data/episodes";
+import { formatDate, formatDuration } from "../lib/format";
+
+interface Props {
+  episode: Episode;
+}
+
+const { episode } = Astro.props;
+---
+
+<article class="card card-hover flex h-full flex-col">
+  <div class="flex items-center gap-3 text-xs">
+    <span class="badge">Episode {episode.number}</span>
+    <span class="inline-flex items-center gap-1 muted"><Clock size={14} /> {formatDuration(episode.durationSeconds)}</span>
+    <time class="muted ml-auto" datetime={episode.date}>{formatDate(episode.date)}</time>
+  </div>
+
+  <h3 class="mt-4 text-lg font-semibold leading-snug text-slate-900 dark:text-white">
+    {episode.title}
+  </h3>
+  <p class="mt-2 flex-1 text-sm muted">{episode.description}</p>
+
+  <div class="mt-4 flex flex-wrap gap-1.5">
+    {episode.tags.map((tag) => <span class="badge">{tag}</span>)}
+  </div>
+
+  <a
+    href={episode.videoUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn btn-secondary mt-5 w-full"
+  >
+    <Play size={16} /> Watch episode
+  </a>
+</article>

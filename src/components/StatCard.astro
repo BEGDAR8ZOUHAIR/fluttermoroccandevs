@@ -1,0 +1,19 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  value: string;
+  label: string;
+  icon: string;
+}
+
+const { value, label, icon } = Astro.props;
+---
+
+<div class="card card-hover text-center sm:text-left">
+  <div class="icon-tile mx-auto sm:mx-0">
+    <Icon name={icon} size={22} />
+  </div>
+  <p class="mt-4 text-3xl font-extrabold text-slate-900 dark:text-white">{value}</p>
+  <p class="mt-1 text-sm muted">{label}</p>
+</div>

@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import PageHeader from "../components/PageHeader.astro";
+import PillarCard from "../components/PillarCard.astro";
+import NewsletterForm from "../components/NewsletterForm.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { Mail } from "@lucide/astro";
+import BrandIcon from "../components/BrandIcon.astro";
+import { site, socials } from "../config/site";
+
+const github = socials.find((social) => social.icon === "github");
+
+const ways = [
+  {
+    title: "Join a meetup",
+    description: "Show up, ask questions, and meet other Flutter developers in your city.",
+    icon: "map-pin",
+  },
+  {
+    title: "Speak or host",
+    description: "Give a talk, host a workshop, or suggest a podcast topic you care about.",
+    icon: "book-open",
+  },
+  {
+    title: "Contribute code",
+    description: "Pick an issue in one of our community repos and ship your first pull request.",
+    icon: "git-branch",
+  },
+  {
+    title: "Mentor newcomers",
+    description: "Help beginners level up — a few hours a month makes a lasting difference.",
+    icon: "heart-handshake",
+  },
+];
+---
+
+<BaseLayout
+  title="Contribute"
+  description="Join FlutterMoroccanDevs — speak, write, contribute code, mentor, or suggest a topic. There is a place for every Flutter developer in Morocco."
+>
+  <PageHeader
+    eyebrow="Get involved"
+    title="Join the community"
+    description="FlutterMoroccanDevs is powered by its members. Whether you are just starting out or shipping production apps, there is a place for you."
+  >
+    <div class="mt-7">
+      <SocialLinks showLabels />
+    </div>
+  </PageHeader>
+
+  <Section>
+    <SectionHeading
+      eyebrow="Ways to contribute"
+      title="Pick how you want to help"
+      description="Every contribution counts — code, talks, mentoring, or simply showing up."
+    />
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {ways.map((way) => <PillarCard {...way} />)}
+    </div>
+  </Section>
+
+  <Section
+    id="suggest"
+    class="section-alt border-y border-[#c3cad4]/70 dark:border-slate-800/70"
+  >
+    <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div>
+        <p class="eyebrow">Suggest</p>
+        <h2 class="h2 mt-3">Have a topic, project, or event?</h2>
+        <p class="lead mt-3">
+          Tell us what you would like to see. Suggest a podcast topic, propose an open-source
+          project, or pitch a meetup — we build the calendar with the community.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={`mailto:${site.email}?subject=Suggestion%20for%20FlutterMoroccanDevs`} class="btn btn-primary">
+            <Mail size={16} /> Email us
+          </a>
+          <a href={github?.href} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <BrandIcon name="github" size={16} /> Open an issue
+          </a>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="h3">Community updates</h3>
+        <p class="mt-2 text-sm muted">
+          Subscribe to hear about new episodes, workshops, and calls for contributors.
+        </p>
+        <div class="mt-4">
+          <NewsletterForm />
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

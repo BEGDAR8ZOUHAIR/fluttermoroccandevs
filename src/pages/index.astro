@@ -1,0 +1,135 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import PillarCard from "../components/PillarCard.astro";
+import StatCard from "../components/StatCard.astro";
+import EpisodeCard from "../components/EpisodeCard.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import EventCard from "../components/EventCard.astro";
+import NewsletterForm from "../components/NewsletterForm.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { ArrowRight } from "@lucide/astro";
+import { site } from "../config/site";
+import { stats, pillars } from "../data/mission";
+import { episodesByDate } from "../data/episodes";
+import { projectsByStars } from "../data/projects";
+import { eventsByDate } from "../data/events";
+import { isUpcoming } from "../lib/format";
+
+const featuredEpisodes = episodesByDate.slice(0, 3);
+const featuredProjects = projectsByStars.slice(0, 3);
+const upcomingEvents = eventsByDate.filter((event) => isUpcoming(event.date)).slice(0, 3);
+---
+
+<BaseLayout>
+  {/* Hero */}
+  <section class="relative overflow-hidden border-b border-[#c3cad4]/60 bg-[#dce9fa] dark:border-slate-800 dark:bg-slate-950">
+    <div class="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-10 dark:opacity-[0.06]"></div>
+    <div class="container-page relative py-16 sm:py-24 lg:py-28">
+      <p class="eyebrow">Community · Morocco 🇲🇦</p>
+      <h1 class="h1 mt-5 max-w-4xl">
+        Empowering Flutter Developers in Morocco 🇲🇦
+      </h1>
+      <p class="lead mt-6 max-w-2xl">
+        Building cross-platform apps, sharing knowledge, and growing a community that connects local
+        talent to global standards — one Flutter project at a time.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href={site.joinHref} class="btn btn-primary">
+          Join Community <ArrowRight size={16} />
+        </a>
+        <a href="/projects" class="btn btn-secondary">Explore Projects</a>
+        <a href="/events" class="btn btn-secondary">Upcoming Events</a>
+      </div>
+      <p class="prompt mt-8">
+        <span class="text-flutter-600 dark:text-flutter-300">&gt;_</span>
+        2,400+ members building with Flutter across 8 Moroccan cities — Casablanca, El Jadida, Rabat,
+        Marrakech, Tangier, Fes, Agadir.
+      </p>
+    </div>
+  </section>
+
+  {/* Mission & stats */}
+  <Section id="about">
+    <SectionHeading
+      eyebrow="Our mission"
+      title="A hub for Morocco's Flutter community"
+      description="We bridge local talent with global standards — bringing developers together to learn, build, and ship cross-platform apps in the open."
+    >
+      <a href="/about" class="btn btn-secondary">More about us <ArrowRight size={16} /></a>
+    </SectionHeading>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {pillars.map((pillar) => <PillarCard {...pillar} />)}
+    </div>
+
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+      {stats.map((stat) => <StatCard {...stat} />)}
+    </div>
+  </Section>
+
+  {/* Podcast */}
+  <Section id="podcast" class="section-alt border-y border-[#c3cad4]/70 dark:border-slate-800/70">
+    <SectionHeading
+      eyebrow="Podcast & articles"
+      title="Community talks worth your time"
+      description="Conversations and write-ups from Moroccan Flutter developers — in Darija, French, and English."
+    >
+      <a href="/podcast" class="btn btn-secondary">All episodes <ArrowRight size={16} /></a>
+    </SectionHeading>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {featuredEpisodes.map((episode) => <EpisodeCard episode={episode} />)}
+    </div>
+  </Section>
+
+  {/* Projects */}
+  <Section id="projects">
+    <SectionHeading
+      eyebrow="Featured projects"
+      title="Built by the community, in the open"
+      description="Open-source Flutter apps and pub.dev packages created and maintained by Moroccan developers."
+    >
+      <a href="/projects" class="btn btn-secondary">Explore all <ArrowRight size={16} /></a>
+    </SectionHeading>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {featuredProjects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </Section>
+
+  {/* Events */}
+  <Section id="events" class="section-alt border-y border-[#c3cad4]/70 dark:border-slate-800/70">
+    <SectionHeading
+      eyebrow="Meetups & events"
+      title="Upcoming in-person and online"
+      description="Local Flutter and GDG meetups across Moroccan cities — everyone is welcome, from beginners to seniors."
+    >
+      <a href="/events" class="btn btn-secondary">All events <ArrowRight size={16} /></a>
+    </SectionHeading>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {upcomingEvents.map((event) => <EventCard event={event} />)}
+    </div>
+  </Section>
+
+  {/* Newsletter */}
+  <Section id="newsletter">
+    <div class="card overflow-hidden p-8 sm:p-10 lg:p-12">
+      <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
+        <div>
+          <p class="eyebrow">Stay in the loop</p>
+          <h2 class="h2 mt-3">Community updates, straight to your inbox</h2>
+          <p class="lead mt-3">
+            New episodes, workshops, and open-source calls — no spam, unsubscribe anytime.
+          </p>
+          <SocialLinks class="mt-6" />
+        </div>
+        <div class="lg:justify-self-end">
+          <NewsletterForm />
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

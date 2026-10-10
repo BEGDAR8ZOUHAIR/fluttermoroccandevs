@@ -1,0 +1,31 @@
+---
+import { Moon, Sun } from "@lucide/astro";
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="btn btn-ghost size-10 p-0"
+  aria-label="Toggle color theme"
+  aria-pressed="false"
+>
+  <span id="theme-icon-moon" class="hidden dark:inline-flex"><Moon size={20} /></span>
+  <span id="theme-icon-sun" class="inline-flex dark:hidden"><Sun size={20} /></span>
+</button>
+
+<script>
+  import { logger } from "../lib/logger";
+
+  const toggle = document.getElementById("theme-toggle");
+
+  toggle?.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    try {
+      localStorage.setItem("fmd-theme", isDark ? "dark" : "light");
+    } catch {
+      /* storage unavailable — the current session still updates */
+    }
+    toggle.setAttribute("aria-pressed", String(isDark));
+    logger.info("theme changed", { theme: isDark ? "dark" : "light" });
+  });
+</script>

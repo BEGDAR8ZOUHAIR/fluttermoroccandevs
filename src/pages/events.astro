@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import PageHeader from "../components/PageHeader.astro";
+import EventCard from "../components/EventCard.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+import { eventsByDate } from "../data/events";
+import { isUpcoming } from "../lib/format";
+
+const upcoming = eventsByDate.filter((event) => isUpcoming(event.date));
+const past = eventsByDate.filter((event) => !isUpcoming(event.date)).reverse();
+---
+
+<BaseLayout
+  title="Events"
+  description="Upcoming Flutter and GDG meetups, workshops, and conferences across Moroccan cities — Casablanca, El Jadida, Rabat, Marrakech, and more."
+>
+  <PageHeader
+    eyebrow="Meetups & events"
+    title="Meet the community, in person and online"
+    description="Local Flutter and GDG meetups across Morocco. Everyone is welcome — beginners, students, and seasoned engineers alike."
+  />
+
+  <Section>
+    <SectionHeading
+      eyebrow="Upcoming"
+      title="What's next"
+      description="Mark your calendar and RSVP — spots fill up fast."
+    />
+    {
+      upcoming.length > 0 ? (
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {upcoming.map((event) => <EventCard event={event} />)}
+        </div>
+      ) : (
+        <p class="mt-12 muted">No events scheduled right now — follow us to hear first.</p>
+      )
+    }
+  </Section>
+
+  <Section class="section-alt border-y border-[#c3cad4]/70 dark:border-slate-800/70">
+    <SectionHeading
+      eyebrow="Recap"
+      title="Recent meetups & workshops"
+      description="A look back at what the community has been up to."
+    />
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {past.map((event) => <EventCard event={event} />)}
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Want to host or speak at an event?"
+    description="We partner with universities, GDG chapters, and companies across Morocco to bring Flutter to more cities."
+  />
+</BaseLayout>

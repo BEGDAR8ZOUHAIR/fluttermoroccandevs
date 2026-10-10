@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ArrowLeft } from "@lucide/astro";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you are looking for could not be found on FlutterMoroccanDevs."
+>
+  <section class="section">
+    <div class="container-page flex flex-col items-center py-16 text-center">
+      <p class="text-6xl font-extrabold text-flutter-500">404</p>
+      <h1 class="h2 mt-4">Page not found</h1>
+      <p class="lead mt-3 max-w-md">
+        The page you are looking for does not exist or has moved. Let’s get you back to the
+        community.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn btn-primary"><ArrowLeft size={16} /> Back home</a>
+        <a href="/events" class="btn btn-secondary">Upcoming events</a>
+        <a href="/projects" class="btn btn-secondary">Explore projects</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,97 @@
+---
+import { Send } from "@lucide/astro";
+---
+
+<form id="newsletter-form" class="w-full max-w-md" novalidate>
+  <div class="flex flex-col gap-2 sm:flex-row">
+    <label for="newsletter-email" class="sr-only">Email address</label>
+    <input
+      id="newsletter-email"
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      placeholder="you@example.com"
+      class="w-full rounded-md border-2 border-[#c3cad4] bg-white px-4 py-2.5 text-sm text-[#0e0f10] placeholder:text-slate-400 focus:border-flutter-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+    />
+    <button type="submit" class="btn btn-primary shrink-0">
+      <Send size={16} /> Subscribe
+    </button>
+  </div>
+
+  {/* Honeypot: hidden from humans, catches naive bots. */}
+  <input
+    type="text"
+    name="company"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    class="hidden"
+  />
+
+  <p id="newsletter-status" class="mt-2 min-h-5 text-sm" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  import { logger } from "../lib/logger";
+
+  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
+  const statusEl = document.getElementById("newsletter-status");
+  const endpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT ?? "";
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function setStatus(message: string, ok: boolean): void {
+    if (!statusEl) return;
+    statusEl.textContent = message;
+    statusEl.classList.toggle("text-emerald-600", ok);
+    statusEl.classList.toggle("dark:text-emerald-400", ok);
+    statusEl.classList.toggle("text-rose-600", !ok);
+    statusEl.classList.toggle("dark:text-rose-400", !ok);
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const emailInput = form.querySelector<HTMLInputElement>("#newsletter-email");
+    const honeypot = form.querySelector<HTMLInputElement>('input[name="company"]');
+    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const email = emailInput?.value.trim() ?? "";
+
+    if (honeypot?.value) {
+      logger.warn("newsletter: honeypot triggered");
+      return;
+    }
+
+    if (!EMAIL_RE.test(email)) {
+      setStatus("Please enter a valid email address.", false);
+      emailInput?.focus();
+      return;
+    }
+
+    if (!endpoint) {
+      setStatus("Subscriptions open soon — follow @fluttermorocco on Instagram to stay updated.", false);
+      logger.warn("newsletter: PUBLIC_NEWSLETTER_ENDPOINT is not configured");
+      return;
+    }
+
+    submitButton?.setAttribute("disabled", "true");
+    setStatus("Subscribing…", true);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+      setStatus("You're in! Check your inbox to confirm. 🎉", true);
+      form.reset();
+      logger.info("newsletter: subscribed");
+    } catch (error) {
+      setStatus("Something went wrong. Please try again in a moment.", false);
+      logger.error("newsletter: subscription failed", error);
+    } finally {
+      submitButton?.removeAttribute("disabled");
+    }
+  });
+</script>

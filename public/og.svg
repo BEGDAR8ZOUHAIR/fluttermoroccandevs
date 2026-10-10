@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="FlutterMoroccanDevs — Empowering Flutter Developers in Morocco">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1120" />
+      <stop offset="1" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#13B9FD" />
+      <stop offset="1" stop-color="#0175C2" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g fill="none" stroke="#1E293B" stroke-width="1">
+    <path d="M0 105h1200M0 210h1200M0 315h1200M0 420h1200M0 525h1200" />
+    <path d="M150 0v630M300 0v630M450 0v630M600 0v630M750 0v630M900 0v630M1050 0v630" />
+  </g>
+  <rect x="80" y="88" width="12" height="12" rx="3" fill="url(#accent)" />
+  <text x="80" y="300" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#E2E8F0">FlutterMoroccanDevs</text>
+  <text x="80" y="370" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="40" font-weight="600" fill="#13B9FD">Empowering Flutter Developers in Morocco</text>
+  <text x="80" y="440" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="28" fill="#94A3B8">Build cross-platform apps · Share knowledge · Grow the community</text>
+</svg>

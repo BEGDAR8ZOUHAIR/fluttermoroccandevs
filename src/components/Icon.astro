@@ -1,0 +1,46 @@
+---
+import {
+  Users,
+  Calendar,
+  GitBranch,
+  MapPin,
+  Headphones,
+  BookOpen,
+  Globe,
+  HeartHandshake,
+  Sparkles,
+} from "@lucide/astro";
+
+export type IconName =
+  | "users"
+  | "calendar"
+  | "git-branch"
+  | "map-pin"
+  | "headphones"
+  | "book-open"
+  | "globe"
+  | "heart-handshake";
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 20, class: className = "" } = Astro.props;
+
+const icons: Record<string, any> = {
+  users: Users,
+  calendar: Calendar,
+  "git-branch": GitBranch,
+  "map-pin": MapPin,
+  headphones: Headphones,
+  "book-open": BookOpen,
+  globe: Globe,
+  "heart-handshake": HeartHandshake,
+};
+
+const Cmp = icons[name] ?? Sparkles;
+---
+
+<Cmp size={size} class={className} />

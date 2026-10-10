@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import PageHeader from "../components/PageHeader.astro";
+import PillarCard from "../components/PillarCard.astro";
+import StatCard from "../components/StatCard.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+import { Check } from "@lucide/astro";
+import { pillars, stats } from "../data/mission";
+import { site } from "../config/site";
+
+const principles = [
+  "Learn in the open — every session, note, and recording is shared.",
+  "Build real software, not toy demos, and ship it to pub.dev or the stores.",
+  "Meet developers where they are, from first-year students to seniors.",
+  "Keep it inclusive — across cities, languages, and experience levels.",
+];
+---
+
+<BaseLayout
+  title="About"
+  description="FlutterMoroccanDevs is a hub for Flutter and Dart developers in Morocco, bridging local talent with global standards through podcasts, workshops, and open source."
+>
+  <PageHeader
+    eyebrow="About us"
+    title="Bridging Moroccan Flutter talent with global standards"
+    description="FlutterMoroccanDevs is a community of mobile and cross-platform developers from across Morocco. We learn together, build together, and grow the local ecosystem — in Darija, French, and English."
+  />
+
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-3">
+      <div class="space-y-4 lg:col-span-2">
+        <h2 class="h2">Our mission</h2>
+        <p class="lead">
+          Morocco has no shortage of Flutter talent — what it needs is a place to connect, learn,
+          and be seen. We exist to turn scattered developers into a thriving, self-sustaining
+          community.
+        </p>
+        <p class="muted">
+          From Casablanca to El Jadida, Rabat, Marrakech, Tangier, Fes, and Agadir, we run podcasts,
+          workshops, and meetups, and we publish the open-source Flutter apps and packages that come
+          out of them. Everything is designed to help members build a portfolio, land opportunities,
+          and give back.
+        </p>
+      </div>
+
+      <aside class="card">
+        <h3 class="h3">How we work</h3>
+        <ul class="mt-4 space-y-3">
+          {
+            principles.map((principle) => (
+              <li class="flex gap-3 text-sm muted">
+                <Check class="mt-0.5 shrink-0 text-flutter-500" size={18} />
+                <span>{principle}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </Section>
+
+  <Section class="section-alt border-y border-[#c3cad4]/70 dark:border-slate-800/70">
+    <SectionHeading
+      eyebrow="What drives us"
+      title="Four pillars, one community"
+      description="The principles behind every episode, workshop, and repository we create together."
+    />
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {pillars.map((pillar) => <PillarCard {...pillar} />)}
+    </div>
+  </Section>
+
+  <Section>
+    <SectionHeading
+      eyebrow="By the numbers"
+      title="A community that keeps growing"
+      description="Snapshot of the FlutterMoroccanDevs community today."
+    />
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+      {stats.map((stat) => <StatCard {...stat} />)}
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Ready to be part of it?"
+    description={`Join the community and help shape Flutter in Morocco — or reach us directly at ${site.email}.`}
+  />
+</BaseLayout>

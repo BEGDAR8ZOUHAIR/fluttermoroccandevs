@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FlutterMoroccanDevs logo">
+  <defs>
+    <linearGradient id="fmd" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#13B9FD" />
+      <stop offset="1" stop-color="#02569B" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#0B1120" />
+  <path d="M20 46 34 32 20 18h9l7 7 7-7h9L38 32l14 14h-9l-7-7-7 7z" fill="url(#fmd)" />
+</svg>

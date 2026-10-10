@@ -1,0 +1,27 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import Section from "./Section.astro";
+import { site } from "../config/site";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Section>
+  <div
+    class="card flex flex-col items-start gap-6 bg-linear-to-br from-flutter-500/5 to-transparent p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10"
+  >
+    <div class="max-w-2xl">
+      <h2 class="h3">{title}</h2>
+      <p class="mt-2 text-sm muted">{description}</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <a href={site.joinHref} class="btn btn-primary">Join Community <ArrowRight size={16} /></a>
+      <a href="/guidelines" class="btn btn-secondary">Community guidelines</a>
+    </div>
+  </div>
+</Section>

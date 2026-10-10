@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import PageHeader from "../components/PageHeader.astro";
+import EpisodeCard from "../components/EpisodeCard.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+import { episodesByDate } from "../data/episodes";
+---
+
+<BaseLayout
+  title="Podcast & articles"
+  description="Watch and read Flutter and Dart talks from Moroccan developers — architecture, careers, localization, and open-source deep dives in Darija, French, and English."
+>
+  <PageHeader
+    eyebrow="Podcast & articles"
+    title="Community talks, in your language"
+    description="Conversations with Moroccan Flutter developers on the topics that matter — from state management and rendering to careers and shipping to production."
+  >
+    <div class="mt-7">
+      <SocialLinks showLabels />
+    </div>
+  </PageHeader>
+
+  <Section>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {episodesByDate.map((episode) => <EpisodeCard episode={episode} />)}
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Have a topic or a guest in mind?"
+    description="Suggest an episode topic or volunteer to be a guest — we plan the season together with the community."
+  />
+</BaseLayout>
